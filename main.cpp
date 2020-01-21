@@ -34,6 +34,9 @@ unsigned char next_board[8] = { 0 };
 unsigned char red;
 unsigned char blue;
 unsigned char green;
+int b;
+int g;
+int r;
 
 
 unsigned char Collision()	//충돌 여부 확인
@@ -83,6 +86,8 @@ void draw_map()
 		}
 	}
 
+	
+
 
 	for (int i = 0; i < 8; i++)
 	{
@@ -90,7 +95,7 @@ void draw_map()
 		{
 			if ((next_board[j] & (1 << i)) != 0)
 			{
-				rectangle(img, Point(130 + 3 * i, 3 * j), Point(3 * i + 2, 3 * j + 2), Scalar(blue, green, red), -1);
+				rectangle(img, Point(130 + 10 * i, 10 * j), Point(130 + 10 * i + 9, 10 * j + 9), Scalar(b, g, r), -1);
 			}
 		}
 	}
@@ -183,6 +188,9 @@ int main() {
 	{
 		game_over = 0;	//게임종료 플레그 끄기
 
+		blue = rand() % 256;
+		green = rand() % 256;
+		red = rand() % 256;
 
 		for (int i = 0; i < 31; i++) main_board[i] = 0x801;	//메인보드 초기화
 		main_board[31] = 0xFFF;
@@ -197,9 +205,9 @@ int main() {
 
 			if (new_block == 1)
 			{
-				blue = rand() % 256;
-				green = rand() % 256;
-				red = rand() % 256;
+				b = rand() % 256;
+				g = rand() % 256;
+				r = rand() % 256;
 				for (int i = 0; i < 31; i++)
 				{
 					if (main_board[i] == 0xFFF)
@@ -219,7 +227,7 @@ int main() {
 				}
 
 				NewTetriminos();	//새로운 테트리미노스 생성
-				//NextTetriminos();
+				NextTetriminos();
 			}
 
 			if (new_block == 0)
