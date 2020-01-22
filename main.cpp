@@ -264,8 +264,97 @@ int main() {
 			}
 
 			imshow("src", img);
-			if (waitKey(1) == 27)
+			switch (waitKeyEx(100))
+			{
+			case 27:
 				return 0;
+				break;
+			case 0x250000:
+				for (int i = 0; i < 32; i++)
+				{
+					game_board[i] = main_board[i];	//굳어진후 저장된 보드를 변화하는 보드로 복사
+				}
+
+				if (cur_col >= 3) cur_col--;
+				else cur_col = 2;
+
+				tetriminos_to_temp_line();
+
+				if (Collision() == 1) cur_col++;
+
+				tetriminos_to_temp_line();
+
+				game_board[cur_line] |= temp_line[0];	//현재라인 아래로 이동 후 변화하는 보드에 반영
+				game_board[cur_line + 1] |= temp_line[1];
+				game_board[cur_line + 2] |= temp_line[2];
+				game_board[cur_line + 3] |= temp_line[3];
+				break;
+
+			case 0x260000:
+				for (int i = 0; i < 32; i++)
+				{
+					game_board[i] = main_board[i];	//굳어진후 저장된 보드를 변화하는 보드로 복사
+				}
+
+				pattern++;	//회전으로 상태 변화
+				if (pattern == 4) pattern = 0; //마지막에서 처음으로
+
+				tetriminos_to_temp_line();
+
+				if (Collision() == 1) pattern--;
+
+
+				tetriminos_to_temp_line();
+
+				game_board[cur_line] |= temp_line[0];	//현재라인 아래로 이동 후 변화하는 보드에 반영
+				game_board[cur_line + 1] |= temp_line[1];
+				game_board[cur_line + 2] |= temp_line[2];
+				game_board[cur_line + 3] |= temp_line[3];
+				break;
+
+			case 0x280000:
+				for (int i = 0; i < 32; i++)
+				{
+					game_board[i] = main_board[i];	//굳어진후 저장된 보드를 변화하는 보드로 복사
+				}
+
+				tetriminos_to_temp_line();
+
+				while (Collision() == 0) cur_line++;
+
+				cur_line--;
+
+				tetriminos_to_temp_line();
+
+				game_board[cur_line] |= temp_line[0];	//현재라인 아래로 이동 후 변화하는 보드에 반영
+				game_board[cur_line + 1] |= temp_line[1];
+				game_board[cur_line + 2] |= temp_line[2];
+				game_board[cur_line + 3] |= temp_line[3];
+				break;
+
+			case 0x270000:
+				for (int i = 0; i < 32; i++)
+				{
+					game_board[i] = main_board[i];	//굳어진후 저장된 보드를 변화하는 보드로 복사
+				}
+
+				cur_col++;
+
+				tetriminos_to_temp_line();
+
+				if (Collision() == 1) cur_col--;
+
+				tetriminos_to_temp_line();
+
+
+				game_board[cur_line] |= temp_line[0];	//현재라인 아래로 이동 후 변화하는 보드에 반영
+				game_board[cur_line + 1] |= temp_line[1];
+				game_board[cur_line + 2] |= temp_line[2];
+				game_board[cur_line + 3] |= temp_line[3];
+				break;
+			default :
+				break;
+			}
 		}
 	}	
 }
