@@ -141,40 +141,7 @@ void NextTetriminos()
 	next_board[5] |= (unsigned char)((tetriminos[next_block][0] & 0x000F) << 2);
 
 
-	unsigned char MAP[2][128] = { 0 };
-
-
-	MAP[0][2] |= 0xFF;	//위에 보드 2칸 줄은 너무 두꺼워서 한줄로 만들었다
-	MAP[1][2] |= 0xFF;
-	MAP[0][17] |= 0xFF;
-	MAP[1][17] |= 0xFF;
-
-	for (int i = 2; i < 18; i++)
-	{
-		MAP[0][i] |= 0x01;
-		MAP[1][i] |= 0x80;
-	}
-
-
-	for (int i = 0; i < 8; i++)
-	{
-		for (int j = 0; j < 8; j++)
-		{
-			if ((next_board[i] & (1 << j)) != 0)
-			{
-				if (j < 4)
-				{
-					MAP[1][2 + (2 * i)] |= (0x03 << 2 * (3 - j));
-					MAP[1][2 + (2 * i + 1)] |= (0x03 << 2 * (3 - j));
-				}
-				else
-				{
-					MAP[0][2 + (2 * i)] |= (0x03 << 2 * (7 - j));
-					MAP[0][2 + (2 * i + 1)] |= (0x03 << 2 * (7 - j));
-				}
-			}
-		}
-	}
+	
 
 }
 
